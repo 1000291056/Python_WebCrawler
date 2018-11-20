@@ -14,30 +14,36 @@ def del_file(path):
 def getAllNamesForGirls(url):
     namesForGirls=set()
     r= requests.get(url)
-    r.encoding="utf-8"
+    r.encoding="gb2312"
     content=r.text
+    #print(content)
     #only_tag=SoupStrainer("div",class_="i_cont_s")
     bs=BeautifulSoup(content,"html.parser")
     divs= bs.findAll("div",class_="i_cont_s")
+   
     for div_ in divs:
-        tag_as=div_.children
-        print(tag_as)
-        for a in tag_as:
-            if a.has_attr("title"):
-                print(a["title"])
-                name=a["title"]
-                print(name)
-                #name=Pinyin.get_pinyin(name)
-                if not name.strip():
-                   namesForGirls.add(name)           
+         print("!!!",div)
+        temp_bs=BeautifulSoup(div,"html.parser")
+        tag_as=div_.find
+        #for a in tag_as:
+            #if a.has_attr("title"):
+                #print(a["title"])
+                #name=a["title"]
+                #print(name)
+                ##name=Pinyin.get_pinyin(name)
+                #if not name.strip():
+                   #namesForGirls.add(name)           
             
     return namesForGirls
 def gernerateUrls(namesForGrils):
+    print(namesForGrils)
     urls=set()
     for name_gril in namesForGrils:
         urls.add ("http://www.win4000.com/mt/"+name_gril+".html")
         
 def downLoad(imgs):
+    if(imgs=="None"):
+        return
     if len(imgs)<=0:
         print("no volid url")
     else:
